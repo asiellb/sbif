@@ -17,7 +17,7 @@ http://api.sbif.cl/api/contactanos.jsp
 ## Instalación
 Para instalar la librería ejecuta el siguiente comando en la consola:
 ```bash
-composer require kattatzu/sbif
+composer require asiellb/sbif
 ```
 
 **[Instalación y Uso en Laravel](#instalación-y-uso-en-laravel)**
@@ -193,26 +193,5 @@ sbif_institutions();
 
 No dudes en enviarme tus feedbacks o pull-request para mejorar esta librería.
 
-## Licencia
-
-MIT License
-
-Copyright (c) 2017 José Eduardo Ríos
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+## Créditos
+Fork de versión desarrollada por https://github.com/kattatzu

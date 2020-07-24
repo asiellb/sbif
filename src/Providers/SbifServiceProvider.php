@@ -1,6 +1,6 @@
 <?php namespace Asiellb\Sbif\Providers;
 
-use Asiel\Sbif\Sbif;
+use Asiellb\Sbif\Sbif;
 use Illuminate\Support\ServiceProvider;
 
 class SbifServiceProvider extends ServiceProvider

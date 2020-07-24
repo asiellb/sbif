@@ -1,8 +1,8 @@
-<?php namespace Kattatzu\Sbif;
+<?php namespace Asiellb\Sbif;
 
 /**
  * Class Institution
- * @package Kattatzu\Sbif
+ * @package Asiellb\Sbif
  */
 class Institution
 {

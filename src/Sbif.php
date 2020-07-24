@@ -35,6 +35,7 @@ class Sbif
      */
     public function __construct($apiKey = null)
     {
+        dd($apiKey);
         $this->apiKey = Sbif::apiKey($apiKey);
     }
 

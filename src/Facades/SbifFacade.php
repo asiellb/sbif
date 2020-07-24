@@ -1,7 +1,7 @@
-<?php namespace Kattatzu\Sbif\Facades;
+<?php namespace Asiellb\Sbif\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Kattatzu\Sbif\Sbif;
+use Asiellb\Sbif\Sbif;
 
 class SbifFacade extends Facade
 {

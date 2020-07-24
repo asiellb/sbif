@@ -24,9 +24,8 @@ class SbifServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Sbif::class, function ($app) {
-            $apiKey = config('sbif.key', env('SBIF_API_KEY'));
-            return new Sbif($apiKey);
+        $this->app->singleton(Sbif::class, function () {
+            return new Sbif(config('sbif.key', env('SBIF_API_KEY')));
         });
     }
 

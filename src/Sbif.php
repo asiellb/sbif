@@ -24,7 +24,7 @@ class Sbif
     const IND_IPC = 500;
     const INF_BANK = 600;
 
-    protected $apiKey = null;
+    protected $apiKey;
     protected $apiBase = 'http://api.sbif.cl/api-sbifv3/recursos_api/';
 
 
@@ -33,10 +33,9 @@ class Sbif
      *
      * @param null $apiKey El API key de SBIF
      */
-    public function __construct($apiKey = null)
+    public function __construct($apiKey)
     {
-        dd($apiKey);
-        $this->apiKey = Sbif::apiKey($apiKey);
+        $this->apiKey = $apiKey;
     }
 
 
@@ -46,13 +45,20 @@ class Sbif
      * @param string $apiKey API key a registrar
      * @return string
      */
-    private static function apiKey($apiKey = null)
+    public function apiKey()
     {
-        if ($apiKey !== null) {
-            $apiKey = $apiKey;
-        }
+        return $this->apiKey;
+    }
 
-        return $apiKey;
+    /**
+     * Retorna el apiBase de acceso a la Sbif.
+     *
+     * @param string $apiBase URL de acceso a la Sbif
+     * @return string
+     */
+    public function apiBase()
+    {
+        return $this->apiBase;
     }
 
     /**
@@ -144,13 +150,12 @@ class Sbif
      */
     public static function get($endpoint)
     {
-        $sbif = new Sbif;
-        if ($sbif->apiKey === null) {
+        if (app(Sbif::class)->apikey() === null) {
             throw new ApikeyNotFoundException;
         }
 
         $endpoint = (strpos($endpoint, '/') == 0) ? substr($endpoint, 1) : $endpoint;
-        $endpoint = $this->apiBase . $endpoint . '?apikey=' . $sbif->apiKey . '&formato=json';
+        $endpoint = app(Sbif::class)->apiBase() . $endpoint . '?apikey=' . app(Sbif::class)->apikey() . '&formato=json';
 
         try {
             $client = new \GuzzleHttp\Client();
@@ -177,7 +182,7 @@ class Sbif
      * @param int $indicator indicador consultado
      * @return mixed
      */
-    private function getValueFromResult($body, $indicator)
+    private static function getValueFromResult($body, $indicator)
     {
         $value = 0;
         switch ($indicator) {
@@ -200,7 +205,7 @@ class Sbif
                 return new Institution($body->Perfiles[0]);
         }
 
-        return $this->normalizeNumber($value);
+        return app(Sbif::class)->normalizeNumber($value);
     }
 
     /**
@@ -304,7 +309,7 @@ class Sbif
      * @param $number número a validar
      * @return float
      */
-    private function normalizeNumber($number)
+    private static function normalizeNumber($number)
     {
         $number = str_replace(".", "", $number);
         $number = str_replace(",", ".", $number);

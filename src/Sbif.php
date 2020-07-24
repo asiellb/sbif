@@ -1,19 +1,19 @@
-<?php namespace Kattatzu\Sbif;
+<?php namespace Asiellb\Sbif;
 
 use Exception;
 use DateTime;
 use Carbon\Carbon;
-use Kattatzu\Sbif\Exception\InvalidDateException;
-use Kattatzu\Sbif\Exception\ConnectException;
-use Kattatzu\Sbif\Exception\RequestException;
-use Kattatzu\Sbif\Exception\ApikeyNotFoundException;
-use Kattatzu\Sbif\Exception\EndpointNotFoundException;
+use Asiellb\Sbif\Exception\InvalidDateException;
+use Asiellb\Sbif\Exception\ConnectException;
+use Asiellb\Sbif\Exception\RequestException;
+use Asiellb\Sbif\Exception\ApikeyNotFoundException;
+use Asiellb\Sbif\Exception\EndpointNotFoundException;
 use GuzzleHttp\Exception\ConnectException as GuzzleConnectException;
 use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
 
 /**
  * Class Sbif
- * @package Kattatzu\Sbif
+ * @package Asiellb\Sbif
  */
 class Sbif
 {
@@ -35,7 +35,7 @@ class Sbif
      */
     public function __construct($apiKey = null)
     {
-        $this->apiKey($apiKey);
+        $this->apiKey = Sbif::apiKey($apiKey);
     }
 
 
@@ -45,13 +45,13 @@ class Sbif
      * @param string $apiKey API key a registrar
      * @return string
      */
-    function apiKey($apiKey = null)
+    private static function apiKey($apiKey = null)
     {
         if ($apiKey !== null) {
-            $this->apiKey = $apiKey;
+            $apiKey = $apiKey;
         }
 
-        return $this->apiKey;
+        return $apiKey;
     }
 
     /**
@@ -60,9 +60,9 @@ class Sbif
      * @param DateTime $date fecha a consultar (opcional)
      * @return float
      */
-    function static getDollar($date = null)
+    public static function getDollar($date = null)
     {
-        return $this->getIndicator(self::IND_DOLLAR, $date);
+        return Sbif::getIndicator(self::IND_DOLLAR, $date);
     }
 
     /**
@@ -72,14 +72,14 @@ class Sbif
      * @param DateTime $date fecha a consultar (opcional)
      * @return float
      */
-    function static getIndicator($indicator, $date = null)
+    public static function getIndicator($indicator, $date = null)
     {
-        $date = $this->normalizeDate($date);
+        $date = Sbif::normalizeDate($date);
         //$this->validateDate($date);
-        $endpoint = $this->getIndicatorEndPoint($indicator, $date);
-        $value = $this->get($endpoint);
+        $endpoint = Sbif::getIndicatorEndPoint($indicator, $date);
+        $value = Sbif::get($endpoint);
 
-        return $this->getValueFromResult($value, $indicator);
+        return Sbif::getValueFromResult($value, $indicator);
     }
 
     /**
@@ -89,7 +89,7 @@ class Sbif
      * @param DateTime $date fecha a consultar
      * @return string
      */
-    private function getIndicatorEndPoint($indicator, $date = null)
+    private static function getIndicatorEndPoint($indicator, $date = null)
     {
         $yearMonthDate = $date->format("Y/m");
         $dayDate = $date->format("d");
@@ -122,7 +122,7 @@ class Sbif
      * @param mixed $date fecha a normalizar
      * @return Carbon
      */
-    private function normalizeDate($date = null)
+    private static function normalizeDate($date = null)
     {
         if (is_null($date)) {
             $date = Carbon::today();
@@ -141,14 +141,15 @@ class Sbif
      * @throws ConnectException
      * @return object
      */
-    public function get($endpoint)
+    public static function get($endpoint)
     {
-        if ($this->apiKey === null) {
+        $sbif = new Sbif;
+        if ($sbif->apiKey === null) {
             throw new ApikeyNotFoundException;
         }
 
         $endpoint = (strpos($endpoint, '/') == 0) ? substr($endpoint, 1) : $endpoint;
-        $endpoint = $this->apiBase . $endpoint . '?apikey=' . $this->apiKey . '&formato=json';
+        $endpoint = $this->apiBase . $endpoint . '?apikey=' . $sbif->apiKey . '&formato=json';
 
         try {
             $client = new \GuzzleHttp\Client();
@@ -207,9 +208,9 @@ class Sbif
      * @param DateTime $date fecha a consultar (opcional)
      * @return float
      */
-    function static getEuro($date = null)
+    public static function getEuro($date = null)
     {
-        return $this->getIndicator(self::IND_EURO, $date);
+        return Sbif::getIndicator(self::IND_EURO, $date);
     }
 
     /**
@@ -218,9 +219,9 @@ class Sbif
      * @param DateTime $date fecha a consultar (opcional)
      * @return float
      */
-    function static getUTM($date = null)
+    public static function getUTM($date = null)
     {
-        return $this->getIndicator(self::IND_UTM, $date);
+        return Sbif::getIndicator(self::IND_UTM, $date);
     }
 
     /**
@@ -229,9 +230,9 @@ class Sbif
      * @param DateTime $date fecha a consultar (opcional)
      * @return float
      */
-    function static getUF($date = null)
+    public static function getUF($date = null)
     {
-        return $this->getIndicator(self::IND_UF, $date);
+        return Sbif::getIndicator(self::IND_UF, $date);
     }
 
     /**
@@ -240,9 +241,9 @@ class Sbif
      * @param DateTime $date fecha a consultar (opcional)
      * @return float
      */
-    function static getIPC($date = null)
+    public static function getIPC($date = null)
     {
-        return $this->getIndicator(self::IND_IPC, $date);
+        return Sbif::getIndicator(self::IND_IPC, $date);
     }
 
     /**
@@ -252,12 +253,12 @@ class Sbif
      * @param DateTime $date fecha a consultar (opcional)
      * @return float
      */
-    function static getInstitutionData($code, $date = null)
+    public static function getInstitutionData($code, $date = null)
     {
-        $endpoint = $this->getInstitutionEndPoint($code, $date);
-        $value = $this->get($endpoint);
+        $endpoint = Sbif::getInstitutionEndPoint($code, $date);
+        $value = Sbif::get($endpoint);
 
-        return $this->getValueFromResult($value, self::INF_BANK);
+        return Sbif::getValueFromResult($value, self::INF_BANK);
     }
 
     /**
@@ -269,7 +270,7 @@ class Sbif
      */
     private function getInstitutionEndPoint($code, $date = null)
     {
-        $date = $this->normalizeDate($date);
+        $date = Sbif::normalizeDate($date);
         $this->validateDate($date);
 
         $yearMonthDate = $date->format("Y/m");

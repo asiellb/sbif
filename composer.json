@@ -16,8 +16,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Jose Eduardo Rios",
-            "email": "kattatzu@gmail.com"
+            "name": "Asiel Lara",
+            "email": "asiellb@gmail.com"
         }
     ],
     "require": {
@@ -29,16 +29,16 @@
             "src/helpers.php"
         ],
         "psr-4": {
-            "Kattatzu\\Sbif\\": "src/"
+            "Asiellb\\Sbif\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Kattatzu\\Sbif\\Providers\\SbifServiceProvider"
+                "Asiellb\\Sbif\\Providers\\SbifServiceProvider"
             ],
             "aliases": {
-                "Debugbar": "Kattatzu\\Sbif\\Facades\\SbifFacade"
+                "Sbif": "Asiellb\\Sbif\\Facades\\SbifFacade"
             }
         }
     },

@@ -1,6 +1,6 @@
-<?php namespace Kattatzu\Sbif\Providers;
+<?php namespace Asiellb\Sbif\Providers;
 
-use Kattatzu\Sbif\Sbif;
+use Asiel\Sbif\Sbif;
 use Illuminate\Support\ServiceProvider;
 
 class SbifServiceProvider extends ServiceProvider
@@ -26,7 +26,6 @@ class SbifServiceProvider extends ServiceProvider
     {
         $this->app->singleton(Sbif::class, function ($app) {
             $apiKey = config('sbif.key', env('SBIF_API_KEY'));
-
             return new Sbif($apiKey);
         });
     }

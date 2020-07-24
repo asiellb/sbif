@@ -60,7 +60,7 @@ class Sbif
      * @param DateTime $date fecha a consultar (opcional)
      * @return float
      */
-    function getDollar($date = null)
+    function static getDollar($date = null)
     {
         return $this->getIndicator(self::IND_DOLLAR, $date);
     }
@@ -72,7 +72,7 @@ class Sbif
      * @param DateTime $date fecha a consultar (opcional)
      * @return float
      */
-    function getIndicator($indicator, $date = null)
+    function static getIndicator($indicator, $date = null)
     {
         $date = $this->normalizeDate($date);
         //$this->validateDate($date);
@@ -117,7 +117,7 @@ class Sbif
     }
 
     /**
-     * Devuelve una instancia Carbon de la fecha consultada. 
+     * Devuelve una instancia Carbon de la fecha consultada.
      *
      * @param mixed $date fecha a normalizar
      * @return Carbon
@@ -207,7 +207,7 @@ class Sbif
      * @param DateTime $date fecha a consultar (opcional)
      * @return float
      */
-    function getEuro($date = null)
+    function static getEuro($date = null)
     {
         return $this->getIndicator(self::IND_EURO, $date);
     }
@@ -218,7 +218,7 @@ class Sbif
      * @param DateTime $date fecha a consultar (opcional)
      * @return float
      */
-    function getUTM($date = null)
+    function static getUTM($date = null)
     {
         return $this->getIndicator(self::IND_UTM, $date);
     }
@@ -229,7 +229,7 @@ class Sbif
      * @param DateTime $date fecha a consultar (opcional)
      * @return float
      */
-    function getUF($date = null)
+    function static getUF($date = null)
     {
         return $this->getIndicator(self::IND_UF, $date);
     }
@@ -240,7 +240,7 @@ class Sbif
      * @param DateTime $date fecha a consultar (opcional)
      * @return float
      */
-    function getIPC($date = null)
+    function static getIPC($date = null)
     {
         return $this->getIndicator(self::IND_IPC, $date);
     }
@@ -252,7 +252,7 @@ class Sbif
      * @param DateTime $date fecha a consultar (opcional)
      * @return float
      */
-    function getInstitutionData($code, $date = null)
+    function static getInstitutionData($code, $date = null)
     {
         $endpoint = $this->getInstitutionEndPoint($code, $date);
         $value = $this->get($endpoint);
